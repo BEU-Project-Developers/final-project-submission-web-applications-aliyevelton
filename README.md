@@ -40,4 +40,4 @@ An Inventory Management System built using ASP.NET Core and Entity Framework Cor
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/aliyevelton/inventory-management-system.git
+   git clone https://github.com//BEU-Project-Developers/final-project-submission-web-applications-aliyevelton
