@@ -28,6 +28,14 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 
 var app = builder.Build();
 
+// creates the roles and admin user if they do not exist
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    await DataSeeder.SeedRolesAndAdminAsync(services);
+//}
+
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -45,5 +53,10 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Dashboard}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+    );
 
 app.Run();

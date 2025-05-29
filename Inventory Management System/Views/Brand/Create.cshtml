@@ -1,6 +1,7 @@
-﻿
+﻿@model Inventory_Management_System.ViewModels.BrandCreateViewModel
+
 @{
-ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create";
 }
 
 <div class="content">
@@ -13,37 +14,47 @@ ViewData["Title"] = "Create";
 
     <div class="card">
         <div class="card-body">
-            <div class="row">
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Brand Name</label>
-                        <input type="text">
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea class="form-control"></textarea>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label> Product Image</label>
-                        <div class="image-upload">
-                            <input type="file">
-                            <div class="image-uploads">
-                                <img src="~/assets/img/icons/upload.svg" alt="img">
-                                <h4>Drag and drop a file to upload</h4>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label asp-for="LogoFile">Product Image</label>
+                            <div class="image-upload">
+                                <input asp-for="LogoFile" type="file" class="form-control" />
+                                <span asp-validation-for="LogoFile" class="text-danger"></span>
+                                <div class="image-uploads mt-2">
+                                    <img src="~/assets/img/icons/upload.svg" alt="img" />
+                                    <h4>Drag and drop a file to upload</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-submit me-2">Submit</button>
+                        <a asp-action="Index" class="btn btn-cancel">Cancel</a>
+                    </div>
                 </div>
-                <div class="col-lg-12">
-                    <a href="javascript:void(0);" class="btn btn-submit me-2">Submit</a>
-                    <a href="brandlist.html" class="btn btn-cancel">Cancel</a>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
-
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

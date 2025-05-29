@@ -108,4 +108,20 @@ public class CategoryController : Controller
 
         return RedirectToAction(nameof(Index));
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var category = await _context.Categories.FindAsync(id);
+        if (category == null || category.IsDeleted)
+            return NotFound();
+
+        category.IsDeleted = true;
+        category.UpdatedDate = DateTime.Now;
+
+        _context.Categories.Update(category);
+        await _context.SaveChangesAsync();
+
+        return Ok(); 
+    }
 }
