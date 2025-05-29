@@ -417,6 +417,10 @@
       "PackagePath": "staticwebassets\\assets\\img\\logso.jpg"
     },
     {
+      "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\category.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\category.jpg"
+    },
+    {
       "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\noimage.png",
       "PackagePath": "staticwebassets\\assets\\img\\product\\noimage.png"
     },

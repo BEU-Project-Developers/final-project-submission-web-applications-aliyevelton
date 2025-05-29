@@ -1,6 +1,7 @@
-﻿
+﻿@model CategoryUpdateViewModel
+
 @{
-ViewData["Title"] = "Update Category";
+    ViewData["Title"] = "Update Category";
 }
 
 <div class="content">
@@ -13,31 +14,46 @@ ViewData["Title"] = "Update Category";
 
     <div class="card">
         <div class="card-body">
-            <div class="row">
-                <div class="col-lg-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Category Name</label>
-                        <input type="text" value="Computers">
+            <form asp-action="Update" asp-controller="Category" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label asp-for="Code"></label>
+                            <input asp-for="Code" class="form-control" />
+                            <span asp-validation-for="Code" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-submit me-2">Submit</button>
+                        <a asp-action="Index" asp-controller="Category" class="btn btn-cancel">Cancel</a>
                     </div>
                 </div>
-                <div class="col-lg-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Category Code</label>
-                        <input type="text" value="CT001">
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea class="form-control">Computers Description</textarea>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <a href="javascript:void(0);" class="btn btn-submit me-2">Submit</a>
-                    <a href="categorylist.html" class="btn btn-cancel">Cancel</a>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
-
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

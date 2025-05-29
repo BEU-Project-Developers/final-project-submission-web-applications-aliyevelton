@@ -2,6 +2,7 @@
 using Inventory_Management_System.Models;
 using Inventory_Management_System.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inventory_Management_System.Controllers;
 
@@ -13,9 +14,15 @@ public class CategoryController : Controller
     {
         _context = context;
     }
+
     public IActionResult Index()
     {
-        return View();
+        var categories = _context.Categories
+            .Where(c => !c.IsDeleted)
+            .OrderByDescending(c => c.CreatedDate)
+            .ToList();
+
+        return View(categories);
     }
 
     public IActionResult Create()
@@ -28,6 +35,15 @@ public class CategoryController : Controller
     {
         if (!ModelState.IsValid)
             return View(model);
+
+        bool codeExists = await _context.Categories
+            .AnyAsync(c => c.Code == model.Code && !c.IsDeleted);
+
+        if (codeExists)
+        {
+            ModelState.AddModelError("Code", "This code already exists.");
+            return View(model);
+        }
 
         var category = new Category
         {
@@ -45,9 +61,22 @@ public class CategoryController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult Update()
+    public async Task<IActionResult> Update(int id)
     {
-        return View();
+        var category = await _context.Categories.FindAsync(id);
+        if (category == null || category.IsDeleted)
+            return NotFound();
+
+        var viewModel = new CategoryUpdateViewModel
+        {
+            Id = category.Id,
+            Name = category.Name,
+            Description = category.Description,
+            Code = category.Code,
+            UpdatedDate = category.UpdatedDate
+        };
+
+        return View(viewModel);
     }
 
     [HttpPost]
@@ -57,8 +86,17 @@ public class CategoryController : Controller
             return View(model);
 
         var category = await _context.Categories.FindAsync(model.Id);
-        if (category == null)
+        if (category == null || category.IsDeleted)
             return NotFound();
+
+        bool codeExists = await _context.Categories
+            .AnyAsync(c => c.Id != model.Id && c.Code == model.Code && !c.IsDeleted);
+
+        if (codeExists)
+        {
+            ModelState.AddModelError("Code", "This category code already exists.");
+            return View(model);
+        }
 
         category.Name = model.Name;
         category.Description = model.Description;

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uygT6/ihgf7xTpH75Jo/lMBPuoFLdGHj+hm4eiQqkI4=",
+  "Hash": "hb6pQBjfiTC+XYcIlF+iBILCZ8iO5Xt8iaEoA3jAWSw=",
   "Source": "Inventory Management System",
   "BasePath": "_content/Inventory Management System",
   "Mode": "Default",
@@ -2010,6 +2010,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\logso.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\category.jpg",
+      "SourceId": "Inventory Management System",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\",
+      "BasePath": "_content/Inventory Management System",
+      "RelativePath": "assets/img/product/category.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\product\\category.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\noimage.png",
