@@ -1,6 +1,7 @@
 ﻿using Inventory_Management_System.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Inventory_Management_System.Contexts;
 
@@ -14,6 +15,7 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<Brand> Brands { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<ProductImage> ProductImages { get; set; } = null!;
+    public DbSet<UserRole> CustomUserRoles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -28,5 +30,22 @@ public class AppDbContext : IdentityDbContext<AppUser>
 
         builder.Entity<Sale>()
             .Property(s => s.TotalPrice).HasPrecision(18, 2);
+
+
+        builder.Entity<UserRole>().HasData(
+        new UserRole { Id = 1, Name = "Store Manager" },
+        new UserRole { Id = 2, Name = "Salesperson" },
+        new UserRole { Id = 3, Name = "Cashier" },
+        new UserRole { Id = 4, Name = "Inventory Clerk" },
+        new UserRole { Id = 6, Name = "Purchasing Officer" },
+        new UserRole { Id = 7, Name = "Admin" },
+        new UserRole { Id = 8, Name = "Accountant" }
+        );
+
+        builder.Entity<AppUser>()
+        .HasOne(u => u.UserRole)
+        .WithMany(r => r.Users)
+        .HasForeignKey(u => u.UserRoleId)
+        .OnDelete(DeleteBehavior.SetNull);
     }
 }

@@ -1,10 +1,11 @@
-﻿
+﻿@model Inventory_Management_System.Models.Product
+
 @{
     ViewData["Title"] = "Add Product";
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css" />
 }
 
 <div class="content">
@@ -15,131 +16,121 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Product Name</label>
-                        <input type="text">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Category</label>
-                        <select class="select">
-                            <option>Choose Category</option>
-                            <option>Computers</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Sub Category</label>
-                        <select class="select">
-                            <option>Choose Sub Category</option>
-                            <option>Fruits</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Brand</label>
-                        <select class="select">
-                            <option>Choose Brand</option>
-                            <option>Brand</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Unit</label>
-                        <select class="select">
-                            <option>Choose Unit</option>
-                            <option>Unit</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>SKU</label>
-                        <input type="text">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Minimum Qty</label>
-                        <input type="text">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Quantity</label>
-                        <input type="text">
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label>Description</label>
-<textarea class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Tax</label>
-                        <select class="select">
-                            <option>Choose Tax</option>
-                            <option>2%</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Discount Type</label>
-                        <select class="select">
-                            <option>Percentage</option>
-                            <option>10%</option>
-                            <option>20%</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Price</label>
-                        <input type="text">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label> Status</label>
-                        <select class="select">
-                            <option>Closed</option>
-                            <option>Open</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label> Product Image</label>
-                        <div class="image-upload">
-                            <input type="file">
-                            <div class="image-uploads">
-                                <img src="~/assets/img/icons/upload.svg" alt="img">
-                                <h4>Drag and drop a file to upload</h4>
-                            </div>
+    <form asp-action="Add" enctype="multipart/form-data" method="post">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <!-- Product Name -->
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <a href="javascript:void(0);" class="btn btn-submit me-2">Submit</a>
-                    <a href="productlist.html" class="btn btn-cancel">Cancel</a>
+
+                    <!-- Category -->
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control select">
+                                <option value="">Choose Category</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Brand -->
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Brand</label>
+                            <select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-control select">
+                                <option value="">Choose Brand</option>
+                            </select>
+                            <span asp-validation-for="BrandId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label asp-for="Quantity"></label>
+                            <input asp-for="Quantity" class="form-control" />
+                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label asp-for="Price"></label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Discounted Price -->
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label asp-for="DiscountedPrice"></label>
+                            <input asp-for="DiscountedPrice" class="form-control" />
+                            <span asp-validation-for="DiscountedPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Old Price -->
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label asp-for="OldPrice"></label>
+                            <input asp-for="OldPrice" class="form-control" />
+                            <span asp-validation-for="OldPrice" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- IsActive -->
+                    <div class="col-lg-3 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label asp-for="IsActive"></label>
+                            <select asp-for="IsActive" class="form-control select">
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                            <span asp-validation-for="IsActive" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Product Image(s) -->
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Product Images</label>
+                            <input type="file" name="ProductImages" multiple class="form-control" />
+                        </div>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="col-lg-12">
+                        <button type="submit" class="btn btn-submit me-2">Submit</button>
+                        <a asp-action="Index" class="btn btn-cancel">Cancel</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </form>
 </div>
 
 @section Scripts {
     <script src="~/assets/plugins/select2/js/select2.min.js"></script>
+    <script>
+        $(".select").select2();
+    </script>
+    <partial name="_ValidationScriptsPartial" />
 }

@@ -8,7 +8,7 @@ public static class DataSeeder
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
 
-        string[] roles = { "Admin", "Moderator", "User" };
+        string[] roles = { "Admin", "Moderator", "User", "Inventory Manager" };
 
         foreach (var role in roles)
         {

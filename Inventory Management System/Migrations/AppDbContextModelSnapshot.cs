@@ -94,6 +94,9 @@ namespace Inventory_Management_System.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int?>("UserRoleId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -103,6 +106,8 @@ namespace Inventory_Management_System.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("UserRoleId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -294,6 +299,60 @@ namespace Inventory_Management_System.Migrations
                     b.ToTable("Sale");
                 });
 
+            modelBuilder.Entity("Inventory_Management_System.Models.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Store Manager"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Salesperson"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Cashier"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Inventory Clerk"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Purchasing Officer"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Accountant"
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -427,6 +486,16 @@ namespace Inventory_Management_System.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Inventory_Management_System.Models.AppUser", b =>
+                {
+                    b.HasOne("Inventory_Management_System.Models.UserRole", "UserRole")
+                        .WithMany("Users")
+                        .HasForeignKey("UserRoleId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("UserRole");
+                });
+
             modelBuilder.Entity("Inventory_Management_System.Models.Product", b =>
                 {
                     b.HasOne("Inventory_Management_System.Models.Brand", "Brand")
@@ -540,6 +609,11 @@ namespace Inventory_Management_System.Migrations
             modelBuilder.Entity("Inventory_Management_System.Models.Product", b =>
                 {
                     b.Navigation("ProductImages");
+                });
+
+            modelBuilder.Entity("Inventory_Management_System.Models.UserRole", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

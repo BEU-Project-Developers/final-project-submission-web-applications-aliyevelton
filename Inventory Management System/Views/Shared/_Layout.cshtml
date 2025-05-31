@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<AppUser> UserManager
+@inject SignInManager<AppUser> SignInManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var roles = await UserManager.GetRolesAsync(user);
+    var profileImage = string.IsNullOrEmpty(user?.Image)
+        ? Url.Content("~/assets/img/profiles/default.jpg")
+        : Url.Content($"~/assets/img/profiles/{user.Image}");
+    var fullName = $"{user?.FirstName} {user?.LastName}";
+    var roleName = roles.FirstOrDefault() ?? "User";
+}
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -15,9 +30,9 @@
 
     <link rel="stylesheet" href="~/assets/css/animate.css">
 
+    @RenderSection("Styles", required: false)
     <link rel="stylesheet" href="~/assets/css/dataTables.bootstrap4.min.css">
 
-    @RenderSection("Styles", required: false)
     <link rel="stylesheet" href="~/assets/plugins/select2/css/select2.min.css">
 
     <link rel="stylesheet" href="~/assets/plugins/fontawesome/css/fontawesome.min.css">
@@ -55,27 +70,10 @@
 
             <ul class="nav user-menu">
 
-                <li class="nav-item">
-                    <div class="top-nav-search">
-                        <a href="javascript:void(0);" class="responsive-search">
-                            <i class="fa fa-search"></i>
-                        </a>
-                        <form action="#">
-                            <div class="searchinputs">
-                                <input type="text" placeholder="Search Here ...">
-                                <div class="search-addon">
-                                    <span><img src="~/assets/img/icons/closes.svg" alt="img"></span>
-                                </div>
-                            </div>
-                            <a class="btn" id="searchdiv"><img src="~/assets/img/icons/search.svg" alt="img"></a>
-                        </form>
-                    </div>
-                </li>
-
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
                         <span class="user-img">
-                            <img src="~/assets/img/profiles/avator1.jpg" alt="">
+                            <img src="@profileImage" alt="">
                             <span class="status online"></span>
                         </span>
                     </a>
@@ -83,22 +81,31 @@
                         <div class="profilename">
                             <div class="profileset">
                                 <span class="user-img">
-                                    <img src="~/assets/img/profiles/avator1.jpg" alt="">
+                                    <img src="@profileImage" alt="">
                                     <span class="status online"></span>
                                 </span>
                                 <div class="profilesets">
-                                    <h6>John Doe</h6>
-                                    <h5>Admin</h5>
+                                    <h6>@fullName</h6>
+                                    <h5>@roleName</h5>
                                 </div>
                             </div>
                             <hr class="m-0">
-                            <a class="dropdown-item" asp-controller="User" asp-action="Profile"> <i class="me-2" data-feather="user"></i> My Profile</a>
-                            <a class="dropdown-item" asp-controller="Settings" asp-action="Index"><i class="me-2" data-feather="settings"></i>Settings</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Profile">
+                                <i class="me-2" data-feather="user"></i> My Profile
+                            </a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Settings" asp-action="Index">
+                                <i class="me-2" data-feather="settings"></i>Settings
+                            </a>
                             <hr class="m-0">
-                            <a class="dropdown-item logout pb-0" href="signin.html"><img src="~/assets/img/icons/log-out.svg" class="me-2" alt="img">Logout</a>
+                            <form id="logoutForm" asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="dropdown-item logout pb-0" style="border:none; background:none; padding:0;">
+                                    <img src="~/assets/img/icons/log-out.svg" class="me-2" alt="img" /> Logout
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </li>
+
             </ul>
 
 
@@ -119,30 +126,52 @@
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
                         <li class="active">
-                            <a asp-controller="Dashboard" asp-action="Index"><img src="~/assets/img/icons/dashboard.svg" alt="img"><span> Dashboard</span> </a>
+                            <a asp-area="" asp-controller="Dashboard" asp-action="Index">
+                                <img src="~/assets/img/icons/dashboard.svg" alt="img"><span> Dashboard</span>
+                            </a>
                         </li>
                         <li>
-                            <a asp-controller="Product" asp-action="Index"><img src="~/assets/img/icons/product.svg" alt="img"><span> Products</span></a>
+                            <a asp-area="" asp-controller="Product" asp-action="Index">
+                                <img src="~/assets/img/icons/product.svg" alt="img"><span> Products</span>
+                            </a>
                         </li>
                         <li>
-                            <a asp-controller="Category" asp-action="Index"><img src="~/assets/img/icons/category.svg" alt="img"><span> Categories</span></a>
+                            <a asp-area="" asp-controller="Category" asp-action="Index">
+                                <img src="~/assets/img/icons/category.svg" alt="img"><span> Categories</span>
+                            </a>
                         </li>
                         <li>
-                            <a asp-controller="Brand" asp-action="Index"><img src="~/assets/img/icons/brand.svg" alt="img"><span> Brands</span></a>
+                            <a asp-area="" asp-controller="Brand" asp-action="Index">
+                                <img src="~/assets/img/icons/brand.svg" alt="img"><span> Brands</span>
+                            </a>
                         </li>
                         <li>
-                            <a asp-controller="Sales" asp-action="Index"><img src="~/assets/img/icons/sales1.svg" alt="img"><span> Sales</span></a>
+                            <a asp-area="" asp-controller="Sales" asp-action="Index">
+                                <img src="~/assets/img/icons/sales1.svg" alt="img"><span> Sales</span>
+                            </a>
                         </li>
                         <li>
-                            <a asp-controller="Purchase" asp-action="Index"><img src="~/assets/img/icons/purchase1.svg" alt="img"><span> Purchases</span></a>
+                            <a asp-area="" asp-controller="Purchase" asp-action="Index">
+                                <img src="~/assets/img/icons/purchase1.svg" alt="img"><span> Purchases</span>
+                            </a>
                         </li>
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li>
+                                <a asp-area="Admin" asp-controller="User" asp-action="Index">
+                                    <img src="~/assets/img/icons/users1.svg" alt="img"><span> Users</span>
+                                </a>
+                            </li>
+                        }
+
                         <li>
-                            <a asp-controller="User" asp-action="Index"><img src="~/assets/img/icons/users1.svg" alt="img"><span> Users</span> </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Settings" asp-action="Index"><img src="~/assets/img/icons/settings.svg" alt="img"><span> Settings</span> </a>
+                            <a asp-area="" asp-controller="Settings" asp-action="Index">
+                                <img src="~/assets/img/icons/settings.svg" alt="img"><span> Settings</span>
+                            </a>
                         </li>
                     </ul>
+
                 </div>
             </div>
         </div>

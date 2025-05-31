@@ -40,9 +40,12 @@
                             <h4>Please login to your account</h4>
                         </div>
                         <form asp-action="Login" asp-controller="Account" method="post">
+                            @Html.AntiForgeryToken()
+
                             <div class="form-login">
                                 <label asp-for="Email"></label>
                                 <div class="form-addons">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
                                     <input asp-for="Email" class="form-control" placeholder="Enter your email address" />
                                     <img src="~/assets/img/icons/mail.svg" alt="img">
                                 </div>
@@ -59,15 +62,15 @@
                             </div>
 
                             <div class="form-check mb-3 d-flex align-items-center ">
-                                <input type="checkbox" class="form-check-input me-2" id="RememberMe" asp-for="RememberMe"/>
+                                <input type="checkbox" class="form-check-input me-2" id="RememberMe" asp-for="RememberMe" />
                                 <label class="form-check-label mb-0" for="RememberMe">Remember Me</label>
                             </div>
-
 
                             <div class="form-login">
                                 <button type="submit" class="btn btn-login">Sign In</button>
                             </div>
                         </form>
+
                         @* <div class="signinform text-center">
                             <h4>Don’t have an account? <a href="signup.html" class="hover-a">Sign Up</a></h4>
                         </div> *@
@@ -90,3 +93,9 @@
     <script src="~/assets/js/script.js"></script>
 </body>
 </html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
