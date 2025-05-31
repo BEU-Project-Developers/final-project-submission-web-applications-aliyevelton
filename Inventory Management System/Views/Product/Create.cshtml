@@ -1,4 +1,4 @@
-﻿@model Inventory_Management_System.Models.Product
+﻿@model ProductCreateViewModel
 
 @{
     ViewData["Title"] = "Add Product";
@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <form asp-action="Add" enctype="multipart/form-data" method="post">
+    <form asp-action="Create" enctype="multipart/form-data" method="post">
         <div class="card">
             <div class="card-body">
                 <div class="row">
@@ -78,12 +78,12 @@
                         </div>
                     </div>
 
-                    <!-- Old Price -->
+                    <!-- SKU (Stock Keeping Unit) -->
                     <div class="col-lg-3 col-sm-6 col-12">
                         <div class="form-group">
-                            <label asp-for="OldPrice"></label>
-                            <input asp-for="OldPrice" class="form-control" />
-                            <span asp-validation-for="OldPrice" class="text-danger"></span>
+                            <label asp-for="SKU"></label>
+                            <input asp-for="SKU" class="form-control" />
+                            <span asp-validation-for="SKU" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -96,23 +96,11 @@
                         </div>
                     </div>
 
-                    <!-- IsActive -->
-                    <div class="col-lg-3 col-sm-6 col-12">
-                        <div class="form-group">
-                            <label asp-for="IsActive"></label>
-                            <select asp-for="IsActive" class="form-control select">
-                                <option value="true">Active</option>
-                                <option value="false">Inactive</option>
-                            </select>
-                            <span asp-validation-for="IsActive" class="text-danger"></span>
-                        </div>
-                    </div>
-
                     <!-- Product Image(s) -->
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label>Product Images</label>
-                            <input type="file" name="ProductImages" multiple class="form-control" />
+                            <input asp-for="ImageFiles" type="file" multiple class="form-control" />
                         </div>
                     </div>
 

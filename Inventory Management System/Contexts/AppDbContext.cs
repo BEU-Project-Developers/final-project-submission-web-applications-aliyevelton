@@ -24,8 +24,6 @@ public class AppDbContext : IdentityDbContext<AppUser>
         builder.Entity<Product>()
             .Property(p => p.Price).HasPrecision(18, 2);
         builder.Entity<Product>()
-            .Property(p => p.OldPrice).HasPrecision(18, 2);
-        builder.Entity<Product>()
             .Property(p => p.DiscountedPrice).HasPrecision(18, 2);
 
         builder.Entity<Sale>()

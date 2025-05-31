@@ -6,8 +6,8 @@ public class Product
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
     public decimal Price { get; set; }
-    public decimal DiscountedPrice { get; set; }
-    public decimal OldPrice { get; set; }
+    public decimal? DiscountedPrice { get; set; }
+    public string SKU { get; set; } = null!;
     public int CategoryId { get; set; }
     public Category Category { get; set; } = null!;
     public int BrandId { get; set; }

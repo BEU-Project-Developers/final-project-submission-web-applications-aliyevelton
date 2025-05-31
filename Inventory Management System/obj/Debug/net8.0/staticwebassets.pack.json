@@ -53,6 +53,10 @@
       "PackagePath": "staticwebassets\\assets\\img\\brand\\adidas.png"
     },
     {
+      "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\brand\\b076a1e2-117b-444f-915f-04edc230becb.webp",
+      "PackagePath": "staticwebassets\\assets\\img\\brand\\b076a1e2-117b-444f-915f-04edc230becb.webp"
+    },
+    {
       "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\brand\\colgate.png",
       "PackagePath": "staticwebassets\\assets\\img\\brand\\colgate.png"
     },
@@ -437,12 +441,32 @@
       "PackagePath": "staticwebassets\\assets\\img\\logso.jpg"
     },
     {
+      "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\1e0e0bc5-3c7d-49b5-91ee-0860543e029c.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\1e0e0bc5-3c7d-49b5-91ee-0860543e029c.jpg"
+    },
+    {
+      "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\4d79b039-2c8d-4eeb-87fd-aff0dfb6a9cb.jpg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\4d79b039-2c8d-4eeb-87fd-aff0dfb6a9cb.jpg"
+    },
+    {
+      "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\8f267925-b3a8-4044-9ad7-e89782fff440.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\8f267925-b3a8-4044-9ad7-e89782fff440.png"
+    },
+    {
+      "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\bcaade63-c904-41c0-b1eb-b687d6ca8144.jpeg",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\bcaade63-c904-41c0-b1eb-b687d6ca8144.jpeg"
+    },
+    {
       "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\category.jpg",
       "PackagePath": "staticwebassets\\assets\\img\\product\\category.jpg"
     },
     {
       "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\noimage.png",
       "PackagePath": "staticwebassets\\assets\\img\\product\\noimage.png"
+    },
+    {
+      "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\product-default.png",
+      "PackagePath": "staticwebassets\\assets\\img\\product\\product-default.png"
     },
     {
       "Id": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\product1.jpg",
