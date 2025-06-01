@@ -29,5 +29,7 @@ public class ProductUpdateViewModel
     public bool IsActive { get; set; }
 
     public List<IFormFile>? ProductImages { get; set; }
+    public List<string>? ExistingImageNames { get; set; }
+    public List<int>? ExistingImageIds { get; set; }
 }
 

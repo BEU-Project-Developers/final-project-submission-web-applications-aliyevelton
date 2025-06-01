@@ -29,6 +29,11 @@ public class AppDbContext : IdentityDbContext<AppUser>
         builder.Entity<Sale>()
             .Property(s => s.TotalPrice).HasPrecision(18, 2);
 
+        builder.Entity<Product>()
+        .HasIndex(p => p.SKU)
+        .IsUnique();
+
+
 
         builder.Entity<UserRole>().HasData(
         new UserRole { Id = 1, Name = "Store Manager" },

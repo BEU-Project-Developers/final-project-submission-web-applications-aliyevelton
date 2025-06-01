@@ -226,7 +226,7 @@ namespace Inventory_Management_System.Migrations
 
                     b.Property<string>("SKU")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -236,6 +236,9 @@ namespace Inventory_Management_System.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("SKU")
+                        .IsUnique();
 
                     b.ToTable("Products");
                 });

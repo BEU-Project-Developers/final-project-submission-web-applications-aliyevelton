@@ -1,6 +1,7 @@
 ﻿using Inventory_Management_System.Contexts;
 using Inventory_Management_System.Models;
 using Inventory_Management_System.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -110,18 +111,18 @@ public class CategoryController : Controller
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Delete(int id)
     {
-        var category = await _context.Categories.FindAsync(id);
+        var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
         if (category == null || category.IsDeleted)
             return NotFound();
 
         category.IsDeleted = true;
-        category.UpdatedDate = DateTime.Now;
+        category.UpdatedDate = DateTime.UtcNow;
 
-        _context.Categories.Update(category);
         await _context.SaveChangesAsync();
 
-        return Ok(); 
+        return RedirectToAction("Index");
     }
 }

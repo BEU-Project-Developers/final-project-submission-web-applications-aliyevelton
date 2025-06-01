@@ -153,9 +153,10 @@
                                     <a class="me-3" asp-controller="Product" asp-action="Update" asp-route-id="@product.Id">
                                         <img src="~/assets/img/icons/edit.svg" alt="Edit" />
                                     </a>
-                                    <a class="confirm-text" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id">
+                                    <a href="javascript:void(0);" class="confirm-text" data-id="@product.Id">
                                         <img src="~/assets/img/icons/delete.svg" alt="Delete" />
                                     </a>
+
                                 </td>
                             </tr>
                         }
@@ -167,3 +168,54 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script src="~/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".confirm-text").forEach(button => {
+                button.addEventListener("click", function () {
+                    const productId = this.getAttribute("data-id");
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "This product will be permanently deleted!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            fetch(`/Product/Delete/${productId}`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'RequestVerificationToken': getAntiForgeryToken()
+                                }
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        Swal.fire('Deleted!', 'Product has been deleted.', 'success')
+                                            .then(() => {
+                                                window.location.reload();
+                                            });
+                                    } else {
+                                        Swal.fire('Error!', 'Failed to delete product.', 'error');
+                                    }
+                                })
+                                .catch(() => {
+                                    Swal.fire('Error!', 'Failed to delete product.', 'error');
+                                });
+                        }
+                    });
+                });
+            });
+        });
+
+        function getAntiForgeryToken() {
+            const tokenElement = document.querySelector('input[name="__RequestVerificationToken"]');
+            return tokenElement ? tokenElement.value : '';
+        }
+    </script>
+}

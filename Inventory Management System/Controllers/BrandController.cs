@@ -123,11 +123,10 @@ public class BrandController : Controller
             return NotFound();
 
         brand.IsDeleted = true;
-        brand.UpdatedDate = DateTime.Now;
+        brand.UpdatedDate = DateTime.UtcNow;
 
-        _context.Brands.Update(brand);
         await _context.SaveChangesAsync();
 
-        return Ok();
+        return RedirectToAction("Index");
     }
 }

@@ -22,6 +22,7 @@ public class ProductController : Controller
     public async Task<IActionResult> Index()
     {
         var products = await _context.Products
+            .Where(p => !p.IsDeleted)
             .Include(p => p.Category)
             .Include(p => p.Brand)
             .Include(p => p.ProductImages)
@@ -30,11 +31,43 @@ public class ProductController : Controller
         return View(products);
     }
 
-
-    public IActionResult Details()
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
     {
-        return View();
+        var product = await _context.Products
+            .Where(p => !p.IsDeleted)
+            .Include(p => p.Category)
+            .Include(p => p.Brand)
+            .Include(p => p.ProductImages)
+            .Where(p => p.Id == id)
+            .Select(p => new ProductDetailViewModel
+            {
+                Name = p.Name,
+                CategoryName = p.Category.Name,
+                BrandName = p.Brand != null ? p.Brand.Name : "None",
+                SKU = p.SKU,
+                Quantity = p.Quantity,
+                Price = p.Price,
+                DiscountedPrice = p.DiscountedPrice,
+                IsActive = p.IsActive,
+                Description = p.Description,
+                CreatedDate = p.CreatedDate,
+                Images = p.ProductImages.Select(img => new ProductImageViewModel
+                {
+                    ImageName = img.Image,
+                    SizeKb = new FileInfo(Path.Combine(_webHostEnvironment.WebRootPath, "assets/img/product", img.Image)).Length / 1024
+                }).ToList()
+            })
+            .FirstOrDefaultAsync();
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        return View(product);
     }
+
 
     [Authorize(Roles = "Admin,Manager,Inventory Manager")]
     public IActionResult Create()
@@ -107,6 +140,7 @@ public class ProductController : Controller
     public async Task<IActionResult> Update(int id)
     {
         var product = await _context.Products
+            .Where(p => !p.IsDeleted)
             .Include(p => p.ProductImages)
             .FirstOrDefaultAsync(p => p.Id == id);
 
@@ -123,7 +157,9 @@ public class ProductController : Controller
             Quantity = product.Quantity,
             CategoryId = product.CategoryId,
             BrandId = product.BrandId,
-            IsActive = product.IsActive
+            IsActive = product.IsActive,
+            ExistingImageNames = product.ProductImages?.Select(p => p.Image).ToList(),
+            ExistingImageIds = product.ProductImages?.Select(p => p.Id).ToList()
         };
 
         ViewBag.Categories = new SelectList(await _context.Categories.Where(c => !c.IsDeleted).ToListAsync(), "Id", "Name", model.CategoryId);
@@ -140,6 +176,7 @@ public class ProductController : Controller
     public async Task<IActionResult> Update(ProductUpdateViewModel model)
     {
         var product = await _context.Products
+            .Where(p => !p.IsDeleted)
             .Include(p => p.ProductImages)
             .FirstOrDefaultAsync(p => p.Id == model.Id);
 
@@ -149,7 +186,26 @@ public class ProductController : Controller
         {
             ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name", model.CategoryId);
             ViewBag.Brands = new SelectList(await _context.Brands.ToListAsync(), "Id", "Name", model.BrandId);
+
+            model.ExistingImageNames = product.ProductImages?.Select(p => p.Image).ToList();
+            model.ExistingImageIds = product.ProductImages?.Select(p => p.Id).ToList();
+
             return View(model); 
+        }
+
+        bool isDuplicateSKU = await _context.Products.Where(p => !p.IsDeleted).AnyAsync(p => p.SKU == model.SKU && p.Id != model.Id);
+
+        if (isDuplicateSKU)
+        {
+            ModelState.AddModelError("SKU", "This SKU already exists. Please choose a different SKU.");
+
+            ViewBag.Categories = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name", model.CategoryId);
+            ViewBag.Brands = new SelectList(await _context.Brands.ToListAsync(), "Id", "Name", model.BrandId);
+
+            model.ExistingImageNames = product?.ProductImages?.Select(p => p.Image).ToList();
+            model.ExistingImageIds = product?.ProductImages?.Select(p => p.Id).ToList();
+
+            return View(model);
         }
 
         product.Name = model.Name;
@@ -194,18 +250,38 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> DeleteImage(int imageId)
+    [Authorize(Roles = "Admin,Manager,Inventory Manager")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteImage(int id)
     {
-        var image = await _context.ProductImages.FindAsync(imageId);
+        var image = await _context.ProductImages.FindAsync(id);
         if (image == null) return NotFound();
 
-        var fullPath = Path.Combine(_webHostEnvironment.WebRootPath, "assets", "img", "product", image.Image);
-        if (System.IO.File.Exists(fullPath))
-            System.IO.File.Delete(fullPath);
+        var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "assets/img/product", image.Image);
+        if (System.IO.File.Exists(imagePath))
+        {
+            System.IO.File.Delete(imagePath);
+        }
 
+        // Remove from database
         _context.ProductImages.Remove(image);
         await _context.SaveChangesAsync();
 
-        return Ok();
+        return RedirectToAction("Update", new { id = image.ProductId });
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "Admin,Manager,Inventory Manager")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var product = await _context.Products.Where(p => !p.IsDeleted).FirstOrDefaultAsync(p => p.Id == id);
+        if (product == null) return NotFound();
+
+        product.IsDeleted = true;
+        product.UpdatedDate = DateTime.UtcNow; 
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Index");
     }
 }
