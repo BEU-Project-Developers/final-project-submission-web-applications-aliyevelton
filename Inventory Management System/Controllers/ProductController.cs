@@ -284,4 +284,21 @@ public class ProductController : Controller
 
         return RedirectToAction("Index");
     }
+
+    [HttpGet]
+    public IActionResult SearchProducts(string term)
+    {
+        var products = _context.Products
+            .Where(p => p.Name.Contains(term))
+            .Select(p => new
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+            })
+            .Take(10)
+            .ToList();
+
+        return Json(products);
+    }
 }

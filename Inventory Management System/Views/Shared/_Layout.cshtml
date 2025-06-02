@@ -12,7 +12,6 @@
     var roleName = roles.FirstOrDefault() ?? "User";
 }
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,12 +49,13 @@
         <div class="header">
 
             <div class="header-left active">
-                <a href="index.html" class="logo">
+                @* <a href="index.html" class="logo">
                     <img src="~/assets/img/logo.png" alt="">
                 </a>
                 <a href="index.html" class="logo-small">
                     <img src="~/assets/img/logo-small.png" alt="">
-                </a>
+                </a> *@
+                <h1>NIGAR</h1>
                 <a id="toggle_btn" href="javascript:void(0);">
                 </a>
             </div>
@@ -202,9 +202,10 @@
 
     <script src="~/assets/plugins/sweetalert/sweetalert2.all.min.js" asp-append-version="true"></script>
 
+    @RenderSection("Scripts", required: false)
+
     <!-- Custom Script -->
     <script src="~/assets/js/script.js" asp-append-version="true"></script>
 
-    @RenderSection("Scripts", required: false)
 </body>
 </html>
