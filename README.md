@@ -1,43 +1,54 @@
-# Inventory Management System
+# 📦 Inventory Management System
 
-An Inventory Management System built using ASP.NET Core and Entity Framework Core, designed for an electronic store. The system allows for efficient management of products, categories, brands, stock tracking, and user roles.
+## Overview
 
-## Features
+The **Inventory Management System** is a web-based application designed to streamline inventory operations for retail businesses managing electronic products.  
+It helps maintain accurate stock levels, track sales, and manage users with role-based access.
 
-- **User Management**
-  - Identity-based authentication and authorization
-  - Role-based access (Admin, Manager, etc.)
-  - Profile picture upload
+---
 
-- **Product Management**
-  - Add, update, and delete products
-  - Manage product brands and categories
-  - Attach multiple images to each product
-  - Track quantity, pricing (current, old, and discounted)
+## 🚀 Features
 
-- **Category and Brand Management**
-  - CRUD operations for categories and brands
-  - Category code generation
-  - Brand logo support
+- **Role-Based Access Control**  
+  - **Admin:** Full control over products, categories, brands, sales, and user management  
+  - **Sales Staff:** Create sales and view product details without modifying inventory
 
-- **Inventory Tracking**
-  - Stock updates based on sales
-  - Active/inactive and soft delete status for products
+- **Product Management**  
+  Add, update, and delete products. Assign products to categories and brands. Manage stock quantity, pricing, and images.
 
-- **Database & Relationships**
-  - Entity Framework Core with SQL Server
-  - Proper use of foreign keys and relationships (1:N)
+- **Category & Brand Management**  
+  Create and maintain product categories and brands for better organization.
 
-## Technologies Used
+- **Sales Module**  
+  Record sales transactions, automatically update product stock, and track sale details.
 
-- ASP.NET Core 8.0
-- Entity Framework Core
-- Identity Framework
-- SQL Server
-- HTML/CSS/Bootstrap (for views)
+- **Inventory Tracking**  
+  Monitor stock changes with timestamps, mark low stock alerts, and soft delete products for data integrity.
 
-## Getting Started
+- **User Management**  
+  Manage user accounts, roles, and profile pictures.
 
-1. Clone the repository:
+---
+
+## 🛠 Technology Stack
+
+- **Backend:** ASP.NET Core MVC / Web API  
+- **Frontend:** Bootstrap, jQuery, ApexCharts  
+- **Database:** SQL Server  
+- **ORM:** Entity Framework Core
+
+---
+
+## 📥 Getting Started
+
+### Prerequisites
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)  
+- SQL Server (LocalDB or full instance)  
+- Visual Studio 2022+ or VS Code
+
+### Installation Steps
+
+1. Clone the repository:  
    ```bash
-   git clone https://github.com//BEU-Project-Developers/final-project-submission-web-applications-aliyevelton
+   git clone https://github.com/BEU-Project-Developers/final-project-submission-web-applications-aliyevelton
