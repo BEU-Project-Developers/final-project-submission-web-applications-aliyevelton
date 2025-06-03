@@ -10,7 +10,7 @@ public class Sale
     public decimal TotalPrice { get; set; }
     public decimal? DiscountAmount { get; set; }
     public PaymentMethod PaymentMethod { get; set; }
-    public string Reference { get; set; }
+    public string Reference { get; set; } = null!; 
     public DateTime CreatedDate { get; set; }
     public DateTime? UpdatedDate { get; set; }
     public ICollection<SaleItem> SaleItems { get; set; } = new List<SaleItem>();

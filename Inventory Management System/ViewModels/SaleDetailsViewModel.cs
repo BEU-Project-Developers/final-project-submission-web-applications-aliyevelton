@@ -17,7 +17,7 @@ public class SaleDetailsViewModel
     public class SaleItemDetails
     {
         public string ProductName { get; set; } = string.Empty;
-        public string ProductImageFileName { get; set; }
+        public string ProductImageFileName { get; set; } = "default.png"; // Default image if none exists
         public int QuantitySold { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Subtotal => QuantitySold * UnitPrice;

@@ -4,6 +4,7 @@ using Inventory_Management_System.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,5 +71,7 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Dashboard}/{action=Index}/{id?}");
+
+var cultureInfo = new CultureInfo("en-GB"); // uses dd-MM-yyyy
 
 app.Run();

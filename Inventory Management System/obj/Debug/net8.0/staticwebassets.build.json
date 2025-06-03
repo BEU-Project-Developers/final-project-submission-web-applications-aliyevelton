@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "u/SZvpZXXFdSKvHkQ2RfiQy7LeUuz9LEqtyA2PNs8Uc=",
+  "Hash": "5Y4ART8iGnrFrtjw7oZINew0/ffCyXSHdoJIKfX0YpI=",
   "Source": "Inventory Management System",
   "BasePath": "_content/Inventory Management System",
   "Mode": "Default",
@@ -2181,6 +2181,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\img\\product\\1e0e0bc5-3c7d-49b5-91ee-0860543e029c.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\251cdf28-1e08-4bd3-a012-d91920a4ebb6.jpg",
+      "SourceId": "Inventory Management System",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\",
+      "BasePath": "_content/Inventory Management System",
+      "RelativePath": "assets/img/product/251cdf28-1e08-4bd3-a012-d91920a4ebb6.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\img\\product\\251cdf28-1e08-4bd3-a012-d91920a4ebb6.jpg"
     },
     {
       "Identity": "C:\\Users\\User\\source\\repos\\Inventory Management System\\Inventory Management System\\wwwroot\\assets\\img\\product\\4d79b039-2c8d-4eeb-87fd-aff0dfb6a9cb.jpg",

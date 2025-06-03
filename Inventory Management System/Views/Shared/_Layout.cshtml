@@ -2,15 +2,34 @@
 @inject UserManager<AppUser> UserManager
 @inject SignInManager<AppUser> SignInManager
 
+
 @{
-    var user = await UserManager.GetUserAsync(User);
-    var roles = await UserManager.GetRolesAsync(user);
-    var profileImage = string.IsNullOrEmpty(user?.Image)
-        ? Url.Content("~/assets/img/profiles/default.jpg")
-        : Url.Content($"~/assets/img/profiles/{user.Image}");
-    var fullName = $"{user?.FirstName} {user?.LastName}";
-    var roleName = roles.FirstOrDefault() ?? "User";
+    AppUser? user = null;
+    IList<string> roles = new List<string>();
+    string profileImage = Url.Content("~/assets/img/profiles/default.jpg");
+    string fullName = "Guest";
+    string roleName = "User";
+
+    try
+    {
+        user = await UserManager.GetUserAsync(User);
+        if (user != null)
+        {
+            roles = await UserManager.GetRolesAsync(user);
+            profileImage = string.IsNullOrEmpty(user.Image)
+                ? Url.Content("~/assets/img/profiles/default.jpg")
+                : Url.Content($"~/assets/img/profiles/{user.Image}");
+            fullName = $"{user.FirstName} {user.LastName}";
+            roleName = roles.FirstOrDefault() ?? "User";
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error retrieving user information: {ex.Message}");
+    }
 }
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,13 +68,12 @@
         <div class="header">
 
             <div class="header-left active">
-                @* <a href="index.html" class="logo">
+                <a href="index.html" class="logo">
                     <img src="~/assets/img/logo.png" alt="">
                 </a>
                 <a href="index.html" class="logo-small">
                     <img src="~/assets/img/logo-small.png" alt="">
-                </a> *@
-                <h1>NIGAR</h1>
+                </a>
                 <a id="toggle_btn" href="javascript:void(0);">
                 </a>
             </div>
@@ -92,9 +110,6 @@
                             <hr class="m-0">
                             <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Profile">
                                 <i class="me-2" data-feather="user"></i> My Profile
-                            </a>
-                            <a class="dropdown-item" asp-area="" asp-controller="Settings" asp-action="Index">
-                                <i class="me-2" data-feather="settings"></i>Settings
                             </a>
                             <hr class="m-0">
                             <form id="logoutForm" asp-area="" asp-controller="Account" asp-action="Logout" method="post" class="d-inline">

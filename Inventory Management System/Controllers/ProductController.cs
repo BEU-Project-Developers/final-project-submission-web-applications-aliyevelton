@@ -95,7 +95,7 @@ public class ProductController : Controller
             Price = model.Price,
             DiscountedPrice = model.DiscountedPrice,
             SKU = model.SKU,
-            Quantity = model.Quantity,
+            Quantity = 0,
             CategoryId = model.CategoryId,
             BrandId = model.BrandId,
             IsActive = true,

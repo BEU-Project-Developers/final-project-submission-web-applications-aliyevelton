@@ -27,10 +27,6 @@ public class ProductCreateViewModel
     [Required]
     public int BrandId { get; set; }
 
-    [Required]
-    [Range(0, int.MaxValue)]
-    public int Quantity { get; set; }
-
 
     [Display(Name = "Product Images")]
     public List<IFormFile>? ImageFiles { get; set; }

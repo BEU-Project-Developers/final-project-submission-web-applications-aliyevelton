@@ -18,6 +18,8 @@ public class AppDbContext : IdentityDbContext<AppUser>
     public DbSet<UserRole> CustomUserRoles { get; set; }
     public DbSet<Sale> Sales { get; set; } = null!;
     public DbSet<SaleItem> SaleItems { get; set; } = null!;
+    public DbSet<Purchase> Purchases { get; set; } = null!;
+    public DbSet<PurchaseItem> PurchaseItems { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -35,6 +37,11 @@ public class AppDbContext : IdentityDbContext<AppUser>
 
         builder.Entity<SaleItem>()
             .Property(si => si.UnitPrice).HasPrecision(18, 2);
+
+        builder.Entity<Purchase>()
+            .Property(p => p.TotalCost).HasPrecision(18, 2);
+        builder.Entity<PurchaseItem>()
+            .Property(pi => pi.UnitCost).HasPrecision(18, 2);
 
         builder.Entity<Product>()
         .HasIndex(p => p.SKU)
