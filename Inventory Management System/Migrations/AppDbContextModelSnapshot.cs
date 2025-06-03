@@ -142,7 +142,7 @@ namespace Inventory_Management_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("Inventory_Management_System.Models.Category", b =>
@@ -179,7 +179,7 @@ namespace Inventory_Management_System.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Inventory_Management_System.Models.Product", b =>
@@ -240,7 +240,7 @@ namespace Inventory_Management_System.Migrations
                     b.HasIndex("SKU")
                         .IsUnique();
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Inventory_Management_System.Models.ProductImage", b =>
@@ -265,7 +265,7 @@ namespace Inventory_Management_System.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Inventory_Management_System.Models.Purchase", b =>
@@ -299,7 +299,7 @@ namespace Inventory_Management_System.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Purchases");
+                    b.ToTable("Purchases", (string)null);
                 });
 
             modelBuilder.Entity("Inventory_Management_System.Models.PurchaseItem", b =>
@@ -329,7 +329,7 @@ namespace Inventory_Management_System.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("PurchaseItems");
+                    b.ToTable("PurchaseItems", (string)null);
                 });
 
             modelBuilder.Entity("Inventory_Management_System.Models.SaleItem", b =>
@@ -362,7 +362,7 @@ namespace Inventory_Management_System.Migrations
 
                     b.HasIndex("SaleId");
 
-                    b.ToTable("SaleItems");
+                    b.ToTable("SaleItems", (string)null);
                 });
 
             modelBuilder.Entity("Inventory_Management_System.Models.UserRole", b =>
@@ -379,7 +379,7 @@ namespace Inventory_Management_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomUserRoles");
+                    b.ToTable("CustomUserRoles", (string)null);
 
                     b.HasData(
                         new
@@ -589,7 +589,7 @@ namespace Inventory_Management_System.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Sales");
+                    b.ToTable("Sales", (string)null);
                 });
 
             modelBuilder.Entity("Inventory_Management_System.Models.AppUser", b =>

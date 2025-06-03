@@ -72,6 +72,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
-var cultureInfo = new CultureInfo("en-GB"); // uses dd-MM-yyyy
 
 app.Run();

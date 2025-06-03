@@ -19,14 +19,43 @@ public class ProductController : Controller
         _webHostEnvironment = webHostEnvironment;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int? categoryId, int? brandId)
     {
-        var products = await _context.Products
-            .Where(p => !p.IsDeleted)
-            .Include(p => p.Category)
-            .Include(p => p.Brand)
-            .Include(p => p.ProductImages)
+        var productsQuery = _context.Products
+        .Where(p => !p.IsDeleted)
+        .Include(p => p.Category)
+        .Include(p => p.Brand)
+        .Include(p => p.ProductImages)
+        .AsQueryable();
+
+
+        if (categoryId.HasValue)
+        {
+            productsQuery = productsQuery.Where(p => p.CategoryId == categoryId.Value);
+        }
+
+        if (brandId.HasValue)
+        {
+            productsQuery = productsQuery.Where(p => p.BrandId == brandId.Value);
+        }
+
+        var products = await productsQuery
             .ToListAsync();
+
+        ViewBag.Categories = new SelectList(
+            await _context.Categories.Where(c => !c.IsDeleted).ToListAsync(),
+            "Id",
+            "Name",
+            categoryId);
+
+        ViewBag.Brands = new SelectList(
+            await _context.Brands.Where(b => !b.IsDeleted).ToListAsync(),
+            "Id",
+            "Name",
+            brandId);
+
+        ViewBag.SelectedCategory = categoryId;
+        ViewBag.SelectedBrand = brandId;
 
         return View(products);
     }
@@ -154,7 +183,6 @@ public class ProductController : Controller
             Price = product.Price,
             DiscountedPrice = product.DiscountedPrice,
             SKU = product.SKU,
-            Quantity = product.Quantity,
             CategoryId = product.CategoryId,
             BrandId = product.BrandId,
             IsActive = product.IsActive,
@@ -213,7 +241,6 @@ public class ProductController : Controller
         product.Price = model.Price;
         product.DiscountedPrice = model.DiscountedPrice;
         product.SKU = model.SKU;
-        product.Quantity = model.Quantity;
         product.CategoryId = model.CategoryId;
         product.BrandId = model.BrandId;
         product.IsActive = model.IsActive;
@@ -282,7 +309,7 @@ public class ProductController : Controller
 
         await _context.SaveChangesAsync();
 
-        return RedirectToAction("Index");
+        return Ok();
     }
 
     [HttpGet]
@@ -290,6 +317,7 @@ public class ProductController : Controller
     {
         var products = _context.Products
             .Where(p => p.Name.Contains(term))
+            .Where(p => !p.IsDeleted)
             .Select(p => new
             {
                 Id = p.Id,

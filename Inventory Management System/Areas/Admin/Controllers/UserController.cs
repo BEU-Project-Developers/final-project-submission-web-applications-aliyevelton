@@ -27,16 +27,23 @@ public class UserController : Controller
         _userService = userService;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(bool? isActive)
     {
-        var users = await _context.Users
+        var usersQuery = _context.Users.AsQueryable();
+
+        if (isActive.HasValue)
+        {
+            usersQuery = usersQuery.Where(u => u.IsActive == isActive.Value);
+        }
+
+        var users = await usersQuery
             .Select(u => new UserViewModel
             {
                 Id = u.Id,
                 ProfileImage = u.Image,
                 FirstName = u.FirstName,
                 LastName = u.LastName,
-                Role = u.UserRole.Name, 
+                Role = u.UserRole.Name,
                 Phone = u.PhoneNumber,
                 Email = u.Email,
                 IsActive = u.IsActive
@@ -45,6 +52,7 @@ public class UserController : Controller
 
         return View(users);
     }
+
 
     public async Task<IActionResult> Create()
     {

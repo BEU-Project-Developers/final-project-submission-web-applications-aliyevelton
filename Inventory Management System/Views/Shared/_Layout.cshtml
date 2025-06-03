@@ -29,6 +29,12 @@
     }
 }
 
+@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    var currentArea = ViewContext.RouteData.Values["area"]?.ToString();
+}
+
 
 
 <!DOCTYPE html>
@@ -128,7 +134,6 @@
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="profile.html">My Profile</a>
-                    <a class="dropdown-item" href="generalsettings.html">Settings</a>
                     <a class="dropdown-item" href="signin.html">Logout</a>
                 </div>
             </div>
@@ -140,32 +145,37 @@
             <div class="sidebar-inner slimscroll">
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
-                        <li class="active">
+                        <li class="@(currentController == "Dashboard" && currentArea == null ? "active" : "")">
                             <a asp-area="" asp-controller="Dashboard" asp-action="Index">
                                 <img src="~/assets/img/icons/dashboard.svg" alt="img"><span> Dashboard</span>
                             </a>
                         </li>
-                        <li>
+
+                        <li class="@(currentController == "Product" && currentArea == null ? "active" : "")">
                             <a asp-area="" asp-controller="Product" asp-action="Index">
                                 <img src="~/assets/img/icons/product.svg" alt="img"><span> Products</span>
                             </a>
                         </li>
-                        <li>
+
+                        <li class="@(currentController == "Category" && currentArea == null ? "active" : "")">
                             <a asp-area="" asp-controller="Category" asp-action="Index">
                                 <img src="~/assets/img/icons/category.svg" alt="img"><span> Categories</span>
                             </a>
                         </li>
-                        <li>
+
+                        <li class="@(currentController == "Brand" && currentArea == null ? "active" : "")">
                             <a asp-area="" asp-controller="Brand" asp-action="Index">
                                 <img src="~/assets/img/icons/brand.svg" alt="img"><span> Brands</span>
                             </a>
                         </li>
-                        <li>
+
+                        <li class="@(currentController == "Sales" && currentArea == null ? "active" : "")">
                             <a asp-area="" asp-controller="Sales" asp-action="Index">
                                 <img src="~/assets/img/icons/sales1.svg" alt="img"><span> Sales</span>
                             </a>
                         </li>
-                        <li>
+
+                        <li class="@(currentController == "Purchase" && currentArea == null ? "active" : "")">
                             <a asp-area="" asp-controller="Purchase" asp-action="Index">
                                 <img src="~/assets/img/icons/purchase1.svg" alt="img"><span> Purchases</span>
                             </a>
@@ -173,23 +183,17 @@
 
                         @if (User.IsInRole("Admin"))
                         {
-                            <li>
+                            <li class="@(currentController == "User" && currentArea == "Admin" ? "active" : "")">
                                 <a asp-area="Admin" asp-controller="User" asp-action="Index">
                                     <img src="~/assets/img/icons/users1.svg" alt="img"><span> Users</span>
                                 </a>
                             </li>
                         }
-
-                        <li>
-                            <a asp-area="" asp-controller="Settings" asp-action="Index">
-                                <img src="~/assets/img/icons/settings.svg" alt="img"><span> Settings</span>
-                            </a>
-                        </li>
                     </ul>
-
                 </div>
             </div>
         </div>
+
 
         <div class="page-wrapper">
             @RenderBody()
@@ -218,6 +222,12 @@
     <script src="~/assets/plugins/sweetalert/sweetalert2.all.min.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
+
+    <script>
+        $('.datetimepicker').datetimepicker({
+            format: 'YYYY-MM-DD'  // ISO format
+        });
+    </script>
 
     <!-- Custom Script -->
     <script src="~/assets/js/script.js" asp-append-version="true"></script>
