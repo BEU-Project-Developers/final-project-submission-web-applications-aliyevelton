@@ -49,6 +49,6 @@ It helps maintain accurate stock levels, track sales, and manage users with role
 
 ### Installation Steps
 
-1. Clone the repository:  
+   Clone the repository:  
    ```bash
    git clone https://github.com/BEU-Project-Developers/final-project-submission-web-applications-aliyevelton
